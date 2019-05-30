@@ -1,5 +1,4 @@
-import axios from 'axios';
-import {openDB} from 'idb';
+import { openDB } from 'idb';
 
 function initDB(store) {
     return openDB('reminder-dn', 2, {
@@ -10,8 +9,17 @@ function initDB(store) {
 }
 
 async function getJson(url) {
-    const res = await axios.get(url);
-    return res.data;
+    const response = await fetch(url);
+    return await response.json();
+}
+
+async function postJson(url, data) {
+    const response = await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return await response.json();
 }
 
 async function cacheAll(store, items) {
@@ -49,7 +57,7 @@ export async function getOne(url, store, id) {
 }
 
 export async function addOne(url, store, item) {
-    const res = await axios.put(url, item)
+    const res = await postJson(url, item);
     if (res.status == 200 || res.status == 201) {
         const db = await initDB(store);
         db.add(store, res.data, res.data._id);
