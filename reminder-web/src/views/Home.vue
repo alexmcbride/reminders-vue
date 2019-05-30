@@ -18,7 +18,7 @@ export default {
       reminders: []
     };
   },
-  created() {
+  async created() {
     this.reminders = await data.getAll("/api/reminders", "reminders");
   }
 };
