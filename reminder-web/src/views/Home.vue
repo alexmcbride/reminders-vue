@@ -19,14 +19,7 @@ export default {
     };
   },
   created() {
-    data.getAll("/api/reminders", "reminders")
-      .then(reminders => {
-        this.reminders = reminders;
-      })
-      .catch(err => {
-        // eslint-disable-next-line
-        console.log("Error: " + err);
-      });
+    this.reminders = await data.getAll("/api/reminders", "reminders");
   }
 };
 </script>

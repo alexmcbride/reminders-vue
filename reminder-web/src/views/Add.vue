@@ -26,7 +26,8 @@ export default {
   methods: {
     async save(event) {
       event.preventDefault();
-      if (await this.$validator.validateAll()) {
+      const result = await this.$validator.validateAll();
+      if (result) {
         return await data.addOne("/api/reminders", "reminders", {
           title: this.title
         });
